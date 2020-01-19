@@ -9,9 +9,9 @@ import (
 )
 
 type EmailResponse struct {
-	Name    string
-	Message string
-	Subject string
+	Recipient string
+	Message   string
+	Subject   string
 }
 
 type smtpServer struct {
@@ -33,7 +33,7 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 	password := password
 
 	to := []string{
-		"jroo6002@gmail.com",
+		emailResponse.Recipient,
 	}
 
 	smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
@@ -51,7 +51,7 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 	message := r.URL.Path
 
 	message = strings.TrimPrefix(message, "/")
-	message = "Hello " + message + " and name: " + emailResponse.Name
+	message = "Hello " + message + " and name: " + emailResponse.Recipient
 	//w.Write([]byte(message))
 	fmt.Println(message)
 }
